@@ -4,6 +4,7 @@ from math import sqrt
 import rospy
 import traceback
 from virtual_whiteboard.msg import Marker
+from virtual_whiteboard.srv import Clear
 from std_msgs.msg import String
 import pygame
 
@@ -36,7 +37,7 @@ def main():
 
     pygame.init()
 
-    screen = pygame.display.set_mode((screen_w_px, screen_h_px), pygame.NOFRAME)
+    screen = pygame.display.set_mode((screen_w_px, screen_h_px), pygame.NOFRAME, display=1)
     screen.fill((255, 255, 255))
 
     spray = pygame.image.load(f"{img_path}/spray.png").convert_alpha()
@@ -63,6 +64,9 @@ def main():
     # call whiteboard_draw whenever a new Marker msg is published on the
     # /marker_position topic.
     rospy.Subscriber('/marker_position', Marker, whiteboard_draw, (screen, spray, endpoint, endpoint_radius, status_pub))
+    
+    # create a service that clears the board
+    rospy.Service("clear", Clear, handle_clear_srv)
 
     # rospy.spin()
     r = rospy.Rate(1)
@@ -112,6 +116,8 @@ def whiteboard_draw(msg_in, params):
         task_status = "started"
         status_pub.publish(String(task_status))
 
+def handle_clear_srv():
+    print("cleared")
 
 if __name__ == '__main__':
     try:
