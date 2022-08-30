@@ -4,8 +4,9 @@ from math import sqrt
 import rospy
 import traceback
 from virtual_whiteboard.msg import Marker
-from virtual_whiteboard.srv import Clear
+from virtual_whiteboard.srv import Clear, ClearResponse
 from std_msgs.msg import String
+from std_msgs.msg import Bool
 import pygame
 
 # get global type parameters from rosparam
@@ -37,18 +38,12 @@ def main():
 
     pygame.init()
 
-    screen = pygame.display.set_mode((screen_w_px, screen_h_px), pygame.NOFRAME, display=1)
+    screen = pygame.display.set_mode((screen_w_px, screen_h_px), pygame.NOFRAME, display=rospy.get_param('/display_num'))
     screen.fill((255, 255, 255))
 
     spray = pygame.image.load(f"{img_path}/spray.png").convert_alpha()
 
-    if background != "":
-        bg = pygame.image.load(f"{img_path}/{background}")
-
-        bg_x = (screen_w_px - bg.get_width())/2
-        bg_y = (screen_h_px - bg.get_height())/2
-        
-        screen.blit(bg, (bg_x, bg_y))
+    draw_background(screen, background)
 
     # for debugging - draw the end point and its radius as a red circle
     pygame.draw.circle(
@@ -66,7 +61,9 @@ def main():
     rospy.Subscriber('/marker_position', Marker, whiteboard_draw, (screen, spray, endpoint, endpoint_radius, status_pub))
     
     # create a service that clears the board
-    rospy.Service("clear", Clear, handle_clear_srv)
+    # the lambda function is a workaround to pass extra parameters to the handler
+    # https://answers.ros.org/question/247540/pass-parameters-to-a-service-handler-in-rospy/
+    rospy.Service("clear", Clear, lambda msg: handle_clear_srv(msg, (screen, background)))
 
     # rospy.spin()
     r = rospy.Rate(1)
@@ -116,8 +113,23 @@ def whiteboard_draw(msg_in, params):
         task_status = "started"
         status_pub.publish(String(task_status))
 
-def handle_clear_srv():
+def handle_clear_srv(msg, params):
+    global task_status
+    screen, background = params
     print("cleared")
+    screen.fill((255, 255, 255))
+    draw_background(screen, background)
+    task_status = "not started"
+    return ClearResponse(True)
+
+def draw_background(screen, background):
+    if background != "":
+        bg = pygame.image.load(f"{img_path}/{background}")
+
+        bg_x = (screen_w_px - bg.get_width())/2
+        bg_y = (screen_h_px - bg.get_height())/2
+        
+        screen.blit(bg, (bg_x, bg_y))
 
 if __name__ == '__main__':
     try:
