@@ -6,7 +6,7 @@ node by spoofing a moving marker position
 
 import rospy
 import traceback
-from geometry_msgs.msg import Point
+from virtual_whiteboard.msg import Marker
 # get global type parameters from rosparam
 screen_w_px = rospy.get_param('/screen_w_px')
 screen_h_px = rospy.get_param('/screen_h_px')
@@ -15,15 +15,22 @@ screen_w_meters = rospy.get_param('/screen_w_meters')
 def main():
     rospy.init_node('spoof_marker', anonymous=False)
 
-    marker_pub = rospy.Publisher("/marker_position", Point, queue_size=1)
+    marker_pub = rospy.Publisher("/marker_position", Marker, queue_size=1)
 
-    marker_pos = Point()
+    modes = ["draw", "spray", "erase"]
+
+    marker_pos = Marker()
     marker_pos.x = 0
     marker_pos.y = 0.2
-    marker_pos.z = 0
+    marker_pos.mode = modes[0]
 
     r = rospy.Rate(100)
+    i = 0
     while not rospy.is_shutdown():
+        marker_pos.mode = modes[i%3]
+        if marker_pos.x > screen_w_meters:
+            marker_pos.x = 0
+            i += 1
         marker_pos.x += 0.001
         marker_pos.y += 0
         marker_pub.publish(marker_pos)
