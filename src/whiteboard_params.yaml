@@ -1,0 +1,4 @@
+screen_w_px: 1920
+screen_h_px: 1200
+screen_w_meters: 0.5
+background: /home/carter/ur5_ws/src/virtual_whiteboard/src/svg/hri_curve.svg
