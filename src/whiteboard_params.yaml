@@ -2,4 +2,15 @@ screen_w_px: 1920
 screen_h_px: 1200
 screen_w_meters: 0.5
 img_path: /home/carter/ur5_ws/src/virtual_whiteboard/src/img
-background: hri_curve.svg
+background: ros_curve.svg
+endpoints: # end point for different curves, in screen coordinates
+  hri_curve.svg: [1400, 370]
+  lab_curve.svg: [1290, 600]
+  ros_curve.svg: [1180, 430]
+endpoint_radius: # how close to the endpoint must the cursor be for it to be marked as complete
+  hri_curve.svg: 30
+  lab_curve.svg: 20
+  ros_curve.svg: 30
+draw_color: [0, 0, 0]
+draw_radius: 7
+erase_radius: 40
