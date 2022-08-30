@@ -15,7 +15,7 @@ First, set the screen_w_px and screen_h_px parameters in whiteboard_params.yaml 
 
 Launch the node with virtual_whiteboard.launch, which just loads the parameter file into ROS parameter server and launches the virtual_whiteboard.py node.
 
-To test that things are working without hooking up a real robot, you can run the spoof_marker.py node (`rosrun virtual_whiteboard spoof_marker.py`). This just publishes a line of points to the /marker_position topic. You should see a diagonal line slowly drawn across your screen.
+To test that things are working without hooking up a real robot, you can run the spoof_marker.py node (`rosrun virtual_whiteboard spoof_marker.py`). This just publishes a line of points to the /marker_position topic. You should see a line drawn across your screen.
 
 ## Topic and Message format
-virtual_whiteboard.py listens to the /marker_position topic to know where to draw. /marker_position is a built-in ros [geometry_msgs/Point](https://docs.ros.org/en/jade/api/geometry_msgs/html/msg/Point.html) message. The z value is ignored. The origin is the top left corner of the screen, x goes to the right if you're facing the screen, and y goes down, computer graphics style.
+virtual_whiteboard.py listens to the /marker_position topic to know where to draw. /marker_position is a custom msg type called Marker. The origin is the bottom right corner of the screen, x goes to the right if you're facing the screen, and y goes up.
