@@ -12,6 +12,4 @@ endpoint_radius: # how close to the endpoint must the cursor be for it to be mar
   lab_curve.svg: 20
   ros_curve.svg: 30
 draw_color: [0, 0, 0]
-draw_radius: 12
-erase_radius: 40
 display_num: 1 # what display to show the whiteboard on, if multiple are connected (starts at 0)

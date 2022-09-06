@@ -23,6 +23,7 @@ def main():
     marker_pos.x = 0
     marker_pos.y = 0.2
     marker_pos.mode = modes[0]
+    marker_pos.radius = 50
 
     r = rospy.Rate(100)
     i = 0

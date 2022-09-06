@@ -85,19 +85,20 @@ def whiteboard_draw(msg_in, params):
             screen,
             tuple(rospy.get_param('/draw_color')),
             (x_coord, screen_h_px - y_coord), # flip y axis so origin is bottom left
-            rospy.get_param('/draw_radius'),
+            msg_in.radius
         )
     elif msg_in.mode.lower() == "erase":
         pygame.draw.circle(
             screen,
             (255, 255, 255),
             (x_coord, screen_h_px - y_coord), # flip y axis so origin is bottom left
-            rospy.get_param('/erase_radius'),
+            msg_in.radius
         )
     elif msg_in.mode.lower() == "spray":
+        spray = pygame.transform.scale(spray, (msg_in.radius*2, msg_in.radius*2))
         screen.blit(
             spray,
-            (x_coord - 128, screen_h_px - y_coord - 128)
+            (x_coord - msg_in.radius, screen_h_px - y_coord - msg_in.radius)
         )
     else:
         rospy.logerr(f"Unknown marker mode {msg_in.mode}")
