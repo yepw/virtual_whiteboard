@@ -18,7 +18,7 @@ Launch the node with virtual_whiteboard.launch, which just loads the parameter f
 To test that things are working without hooking up a real robot, you can run the spoof_marker.py node (`rosrun virtual_whiteboard spoof_marker.py`). This just publishes a line of points to the /marker_position topic. You should see a line drawn across your screen. Each sweep across the screen, the type should change from drawing, to spraying, to erasing, and back.
 
 ## Topic and Message format
-whiteboard.py listens to the /marker_position topic to know where to draw. /marker_position is a custom msg type called Marker, which contains the x and y position in meters to draw at, and the mode of drawing, which can be one of: "draw", "erase", or "spray". The origin is the bottom right corner of the screen, x goes to the right if you're facing the screen, and y goes up.
+whiteboard.py listens to the /marker_position topic to know where to draw. /marker_position is a custom msg type called Marker, which contains the x and y position in meters to draw at, the radius of the mark to make, and the mode of drawing, which can be one of: "draw", "erase", or "spray". The origin is the bottom right corner of the screen, x goes to the right if you're facing the screen, and y goes up.
 
 The status of the tracing is published to the /whiteboard_status topic. "not started" means no drawing has been done since the program launched or it was last reset. "started" means drawing has occurred but not inside of the endpoint. "finished" means drawing has occurred inside the endpoint. The endpoint is set manually per svg file in whiteboard_params.yaml.
 
