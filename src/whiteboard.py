@@ -65,13 +65,20 @@ def main():
     # https://answers.ros.org/question/247540/pass-parameters-to-a-service-handler-in-rospy/
     rospy.Service("clear", Clear, lambda msg: handle_clear_srv(msg, (screen, background)))
 
-    # rospy.spin()
-    r = rospy.Rate(1)
-    while not rospy.is_shutdown():
-        # if we don't call pygame.event.pump() ocassionally, pygame thinks that 
-        # the program has frozen
-        pygame.event.pump()
-        r.sleep()
+    rospy.Timer(rospy.Duration(0.01), timer_cb) 
+    rospy.spin()
+    # r = rospy.Rate(1)
+    # while not rospy.is_shutdown():
+    #     # if we don't call pygame.event.pump() ocassionally, pygame thinks that 
+    #     # the program has frozen
+    #     pygame.event.pump()
+    #     r.sleep()
+
+
+def timer_cb(event):
+    pygame.event.pump()
+    pygame.display.flip()
+
 
 def whiteboard_draw(msg_in, params):
     global task_status
@@ -90,7 +97,8 @@ def whiteboard_draw(msg_in, params):
     elif msg_in.mode.lower() == "erase":
         pygame.draw.circle(
             screen,
-            (255, 255, 255),
+            # (255, 255, 255),
+            (200, 200, 200),
             (x_coord, screen_h_px - y_coord), # flip y axis so origin is bottom left
             msg_in.radius
         )
@@ -102,7 +110,6 @@ def whiteboard_draw(msg_in, params):
         )
     else:
         rospy.logerr(f"Unknown marker mode {msg_in.mode}")
-    pygame.display.flip()
     # rospy.loginfo(f"{msg_in.mode} at {x_coord}, {y_coord}")
 
     # check if the task is done by checking how close it is to the end point
@@ -121,6 +128,7 @@ def handle_clear_srv(msg, params):
     screen.fill((255, 255, 255))
     draw_background(screen, background)
     task_status = "not started"
+    pygame.display.flip()
     return ClearResponse(True)
 
 def draw_background(screen, background):

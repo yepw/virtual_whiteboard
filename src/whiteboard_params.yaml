@@ -1,7 +1,7 @@
 screen_w_px: 1920
 screen_h_px: 1080
-screen_w_meters: 0.5
-img_path: /home/carter/ur5_ws/src/virtual_whiteboard/src/img
+screen_w_meters: 1.05
+img_path: /home/yeping/ur5_ws/src/virtual_whiteboard/src/img
 background: hri_curve.svg
 endpoints: # end point for different curves, in screen coordinates
   hri_curve.svg: [1400, 315]

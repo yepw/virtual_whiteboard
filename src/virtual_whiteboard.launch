@@ -1,4 +1,0 @@
-<launch>
-    <rosparam command="load" file="$(find virtual_whiteboard)/src/whiteboard_params.yaml" />
-    <node pkg="virtual_whiteboard" name="virtual_whiteboard" type="virtual_whiteboard.py" />
-</launch>
