@@ -2,14 +2,20 @@ screen_w_px: 1920
 screen_h_px: 1080
 screen_w_meters: 1.05
 img_path: /home/yeping/ur5_ws/src/virtual_whiteboard/src/img
-background: hri_curve.svg
+# background: circle.svg
+background: rectangle.svg
+# background: hri_curve.svg
 endpoints: # end point for different curves, in screen coordinates
   hri_curve.svg: [1400, 315]
   lab_curve.svg: [1290, 600]
   ros_curve.svg: [1180, 430]
+  circle.svg: [1920, 1080]
+  rectangle.svg: [1920, 1080]
 endpoint_radius: # how close to the endpoint must the cursor be for it to be marked as complete
   hri_curve.svg: 30
   lab_curve.svg: 20
   ros_curve.svg: 30
+  circle.svg: 1
+  rectangle.svg: 1
 draw_color: [0, 0, 0]
 display_num: 1 # what display to show the whiteboard on, if multiple are connected (starts at 0)

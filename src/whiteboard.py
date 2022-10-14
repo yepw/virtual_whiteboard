@@ -98,7 +98,7 @@ def whiteboard_draw(msg_in, params):
         pygame.draw.circle(
             screen,
             # (255, 255, 255),
-            (200, 200, 200),
+            (210, 210, 210),
             (x_coord, screen_h_px - y_coord), # flip y axis so origin is bottom left
             msg_in.radius
         )
