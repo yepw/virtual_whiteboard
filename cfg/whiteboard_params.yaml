@@ -1,16 +1,15 @@
 screen_w_px: 1920
 screen_h_px: 1080
 screen_w_meters: 1.05
-img_path: /home/yeping/ur5_ws/src/virtual_whiteboard/src/img
+img_path: /home/yeping/ur5_ws/src/virtual_whiteboard/img
 # background: circle.svg
-background: rectangle.svg
+background: welcome.svg
 # background: hri_curve.svg
 endpoints: # end point for different curves, in screen coordinates
-  hri_curve.svg: [1400, 315]
+  hri_curve.svg: [1500, 250]
   lab_curve.svg: [1290, 600]
-  ros_curve.svg: [1180, 430]
-  circle.svg: [1920, 1080]
-  rectangle.svg: [1920, 1080]
+  # ros_curve.svg: [1180, 430]
+  ros_curve.svg: [0, 0]
 endpoint_radius: # how close to the endpoint must the cursor be for it to be marked as complete
   hri_curve.svg: 30
   lab_curve.svg: 20
